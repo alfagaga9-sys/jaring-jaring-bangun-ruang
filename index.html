@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <!-- Custom Stylesheet -->
-  <link rel="stylesheet" href="css/styles.css?v=2.3">
+  <link rel="stylesheet" href="css/styles.css?v=2.4">
 
   <!-- Three.js 3D WebGL Library & OrbitControls (Local offline first, CDN fallback) -->
   <script src="js/lib/three.min.js"></script>
@@ -72,34 +72,46 @@
   <!-- Main Application Wrapper -->
   <div class="main-wrapper">
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar Navigation (Compact & Collapsible) -->
     <nav class="app-sidebar" id="appSidebar">
-      <div class="nav-section-title">Navigasi Utama</div>
+      <div class="sidebar-header-row">
+        <div class="nav-section-title">Menu Utama</div>
+        <button class="btn-sidebar-toggle" id="sidebarCollapseBtn" title="Ciutkan / Buka Menu" onclick="window.appManager.toggleSidebarCollapse()">
+          <i class="fas fa-angle-double-left" id="sidebarCollapseIcon"></i>
+        </button>
+      </div>
       
-      <a href="#" class="nav-item active" data-view="beranda">
-        <i class="fas fa-home"></i> Beranda
+      <a href="#" class="nav-item active" data-view="beranda" title="Beranda">
+        <i class="fas fa-home"></i>
+        <span class="nav-text">Beranda</span>
       </a>
-      <a href="#" class="nav-item" data-view="eksplorasi">
-        <i class="fas fa-cubes"></i> Eksplorasi 3D
+      <a href="#" class="nav-item" data-view="eksplorasi" title="Eksplorasi 3D">
+        <i class="fas fa-cubes"></i>
+        <span class="nav-text">Eksplorasi 3D</span>
       </a>
-      <a href="#" class="nav-item" data-view="variasi">
-        <i class="fas fa-th-large"></i> Variasi Jaring-Jaring
+      <a href="#" class="nav-item" data-view="variasi" title="Variasi Pola">
+        <i class="fas fa-th-large"></i>
+        <span class="nav-text">Variasi Pola</span>
       </a>
-      <a href="#" class="nav-item" data-view="eksperimen">
-        <i class="fas fa-tools"></i> Coba Susun Sendiri
+      <a href="#" class="nav-item" data-view="eksperimen" title="Susun Mandiri">
+        <i class="fas fa-tools"></i>
+        <span class="nav-text">Susun Mandiri</span>
       </a>
-      <a href="#" class="nav-item" data-view="kuis">
-        <i class="fas fa-question-circle"></i> Kuis Interaktif
-        <span class="badge">4 Level</span>
+      <a href="#" class="nav-item" data-view="kuis" title="Kuis Interaktif">
+        <i class="fas fa-question-circle"></i>
+        <span class="nav-text">Kuis Interaktif</span>
+        <span class="badge">3 Kuis</span>
       </a>
 
-      <div class="nav-section-title" style="margin-top: 1rem;">Informasi & Progres</div>
+      <div class="nav-section-title" style="margin-top: 0.75rem;">Materi & Info</div>
 
-      <a href="#" class="nav-item" data-view="guru">
-        <i class="fas fa-chart-bar"></i> Mode Guru / Ringkasan
+      <a href="#" class="nav-item" data-view="guru" title="Ringkasan Belajar">
+        <i class="fas fa-chart-bar"></i>
+        <span class="nav-text">Ringkasan</span>
       </a>
-      <a href="#" class="nav-item" data-view="petunjuk">
-        <i class="fas fa-book-open"></i> Petunjuk Belajar
+      <a href="#" class="nav-item" data-view="petunjuk" title="Panduan Teori">
+        <i class="fas fa-book-open"></i>
+        <span class="nav-text">Panduan Teori</span>
       </a>
     </nav>
 
@@ -555,6 +567,6 @@
   <script src="js/experimentMode.js?v=2.3"></script>
   <script src="js/quizEngine.js?v=2.3"></script>
   <script src="js/theoryGuide.js?v=2.3"></script>
-  <script src="js/app.js?v=2.3"></script>
+  <script src="js/app.js?v=2.4"></script>
 </body>
 </html>

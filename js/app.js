@@ -51,6 +51,14 @@ class AppManager {
     // Default view
     this.showView("beranda");
     this.updateProgressUI();
+
+    // Restore collapsed sidebar preference on desktop
+    try {
+      if (localStorage.getItem("sidebarCollapsed") === "true" && window.innerWidth > 768) {
+        const sidebar = document.getElementById("appSidebar");
+        if (sidebar) sidebar.classList.add("collapsed");
+      }
+    } catch (e) {}
   }
 
   loadSavedState() {
@@ -1013,6 +1021,21 @@ class AppManager {
       sidebar.classList.remove("mobile-open");
       if (backdrop) backdrop.classList.remove("active");
     }
+  }
+
+  toggleSidebarCollapse() {
+    const sidebar = document.getElementById("appSidebar");
+    if (!sidebar) return;
+    sidebar.classList.toggle("collapsed");
+    const isCollapsed = sidebar.classList.contains("collapsed");
+    try {
+      localStorage.setItem("sidebarCollapsed", isCollapsed ? "true" : "false");
+    } catch (e) {}
+
+    // Beri jeda animasi transisi 260ms lalu sesuaikan Three.js canvas
+    setTimeout(() => {
+      if (window.threeManager) window.threeManager.onWindowResize();
+    }, 260);
   }
 
   attachEventListeners() {
