@@ -112,6 +112,15 @@ class AppManager {
       if (item.dataset.view === viewId) item.classList.add("active");
     });
 
+    // Toggle Active Mobile Bottom Nav Items
+    document.querySelectorAll(".bottom-nav-item").forEach((item) => {
+      item.classList.remove("active");
+      if (item.dataset.view === viewId) item.classList.add("active");
+    });
+
+    // Tutup drawer navigasi jika sedang terbuka di ponsel
+    this.toggleMobileNav(false);
+
     // Special view initializations
     if (viewId === "eksplorasi") {
       this.loadShapeInViewport(this.selectedShapeId);
@@ -992,8 +1001,22 @@ class AppManager {
     }
   }
 
+  toggleMobileNav(forceState) {
+    const sidebar = document.getElementById("appSidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
+    if (!sidebar) return;
+    const shouldOpen = forceState !== undefined ? forceState : !sidebar.classList.contains("mobile-open");
+    if (shouldOpen) {
+      sidebar.classList.add("mobile-open");
+      if (backdrop) backdrop.classList.add("active");
+    } else {
+      sidebar.classList.remove("mobile-open");
+      if (backdrop) backdrop.classList.remove("active");
+    }
+  }
+
   attachEventListeners() {
-    // Navigation items
+    // Desktop / Drawer Sidebar Navigation items
     document.querySelectorAll(".nav-item").forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
@@ -1002,13 +1025,27 @@ class AppManager {
       });
     });
 
-    // Mobile nav toggle
+    // Mobile Bottom Navigation Bar items
+    document.querySelectorAll(".bottom-nav-item").forEach((item) => {
+      item.addEventListener("click", (e) => {
+        e.preventDefault();
+        const viewId = item.dataset.view;
+        this.showView(viewId);
+      });
+    });
+
+    // Mobile nav toggle & backdrop
     const mobileBtn = document.getElementById("btnMobileNavToggle");
     if (mobileBtn) {
-      mobileBtn.onclick = () => {
-        const sidebar = document.getElementById("appSidebar");
-        if (sidebar) sidebar.classList.toggle("mobile-open");
+      mobileBtn.onclick = (e) => {
+        e.stopPropagation();
+        this.toggleMobileNav();
       };
+    }
+
+    const backdrop = document.getElementById("sidebarBackdrop");
+    if (backdrop) {
+      backdrop.onclick = () => this.toggleMobileNav(false);
     }
 
     // Shape selector dropdowns

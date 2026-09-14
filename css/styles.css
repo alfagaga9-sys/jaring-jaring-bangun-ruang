@@ -1084,35 +1084,354 @@ body {
   font-size: 0.92rem;
 }
 
+/* ==========================================================================
+   MOBILE & RESPONSIVE DESIGN ENHANCEMENTS
+   ========================================================================== */
+
+/* Sidebar Backdrop for Mobile */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.sidebar-backdrop.active {
+  display: block;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-mobile-toggle {
+  display: none;
+}
+
+/* Quiz Category Selector */
+.quiz-cat-selector {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Mobile Bottom Navigation (Hidden on Desktop) */
+.mobile-bottom-nav {
+  display: none;
+}
+
+/* Canvas element inside experiment */
+#expCanvas {
+  touch-action: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .app-header {
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 0.85rem;
   }
   
+  .brand-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.15rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand-titles h1 {
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+
   .brand-titles p {
     display: none;
   }
-  
+
+  .progress-widget {
+    display: none;
+  }
+
+  .btn-mobile-toggle {
+    display: flex !important;
+  }
+
+  .header-actions {
+    gap: 0.4rem;
+  }
+
+  /* Slide-in Sidebar Drawer */
   .app-sidebar {
     position: fixed;
-    left: -260px;
-    top: 60px;
+    left: -280px;
+    top: 0;
     bottom: 0;
+    width: 280px;
     z-index: 200;
     box-shadow: var(--shadow-xl);
+    padding: 1.5rem 1rem;
+    overflow-y: auto;
   }
   
   .app-sidebar.mobile-open {
     left: 0;
   }
-  
-  .canvas-container {
-    height: 320px;
+
+  /* Content area with bottom padding for thumb-friendly bottom nav */
+  .app-content {
+    padding: 1rem 0.85rem 75px 0.85rem;
+    max-height: 100vh;
   }
-  
+
+  /* Fixed Thumb-Friendly Bottom Navigation */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #ffffff;
+    border-top: 1.5px solid var(--border-color);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.07);
+    z-index: 1000;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 4px;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 100%;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.68rem;
+    font-weight: 700;
+    gap: 2px;
+    transition: var(--transition);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .bottom-nav-item i {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+  }
+
+  .bottom-nav-item.active {
+    color: var(--primary);
+  }
+
+  .bottom-nav-item.active i {
+    transform: translateY(-2px);
+  }
+
+  /* 3D Viewport on Mobile */
+  .canvas-container {
+    height: 290px;
+  }
+
+  .viewport-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .camera-preset-btns {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.35rem;
+  }
+
+  .camera-preset-btns .btn-xs {
+    text-align: center;
+    padding: 0.35rem 0.2rem;
+  }
+
+  .unfold-controls-bar {
+    padding: 0.85rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .control-buttons-row {
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+
+  .control-buttons-row .btn-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    gap: 0.35rem;
+  }
+
+  .control-buttons-row .btn-group .btn {
+    padding: 0.55rem 0.4rem;
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .speed-pills {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .speed-pill {
+    flex: 1;
+    text-align: center;
+    padding: 0.4rem 0.2rem;
+    font-size: 0.78rem;
+  }
+
+  .scrub-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .custom-slider {
+    width: 100%;
+    height: 8px;
+  }
+
+  /* Sifat & Rumus */
   .prop-grid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  .prop-value {
+    font-size: 1.15rem;
+  }
+
+  .prop-label {
+    font-size: 0.65rem;
+  }
+
+  /* Galeri Variasi 2D */
+  #variasiGalleryContainer {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Mode Eksperimen */
+  .experiment-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .exp-canvas-viewport {
+    height: 330px;
+  }
+
+  .pieces-palette {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .piece-item {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+  }
+
+  .piece-item svg {
+    max-width: 42px;
+    height: auto;
+  }
+
+  /* Kuis Interaktif */
+  .quiz-cat-selector {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-cat-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0.6rem 0.95rem;
+    font-size: 0.82rem;
+  }
+
+  .quiz-card {
+    padding: 1.25rem 1rem;
+    gap: 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .question-title {
+    font-size: 1.05rem;
+    line-height: 1.4;
+  }
+
+  .quiz-media-box {
+    padding: 1rem 0.5rem;
+    min-height: 190px;
+  }
+
+  .quiz-media-box svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem;
+  }
+
+  .option-btn {
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
+  }
+
+  /* Beranda Dashboard */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .menu-card {
+    padding: 1.15rem;
+  }
+
+  .page-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .canvas-container {
+    height: 250px;
+  }
+  .exp-canvas-viewport {
+    height: 290px;
+  }
+  .pieces-palette {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
