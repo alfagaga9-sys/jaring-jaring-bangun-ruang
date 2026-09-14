@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaring-Jaring Bangun Ruang - Media Pembelajaran Interaktif SMP/MTs</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css?v=2.2">
+
+  <!-- Three.js 3D WebGL Library & OrbitControls (Local offline first, CDN fallback) -->
+  <script src="js/lib/three.min.js"></script>
+  <script src="js/lib/OrbitControls.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+      document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+    }
+  </script>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-container">
+      <div class="brand-icon">
+        <i class="fas fa-cube"></i>
+      </div>
+      <div class="brand-titles">
+        <h1>Jaring-Jaring Bangun Ruang</h1>
+        <p>Eksplorasi, Buka, Susun, dan Uji Pemahamanmu!</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Progress Bar Widget -->
+      <div class="progress-widget">
+        <span class="progress-label" id="headerProgressText">Progres Belajar: 0%</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="headerProgressBarFill"></div>
+        </div>
+      </div>
+
+      <!-- Sound Mute/Unmute Toggle -->
+      <button class="btn-icon-secondary" id="audioToggleBtn" title="Efek Suara Aktif" onclick="window.appManager.toggleAudio()">
+        <i class="fas fa-volume-up" id="audioToggleIcon"></i>
+      </button>
+
+      <!-- Fullscreen Toggle -->
+      <button class="btn-icon-secondary" title="Mode Layar Penuh" onclick="window.appManager.toggleFullscreen()">
+        <i class="fas fa-expand"></i>
+      </button>
+
+      <!-- Mobile Menu Toggle -->
+      <button class="btn-icon-secondary" style="display: none;" id="btnMobileNavToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Application Wrapper -->
+  <div class="main-wrapper">
+
+    <!-- Sidebar Navigation -->
+    <nav class="app-sidebar" id="appSidebar">
+      <div class="nav-section-title">Navigasi Utama</div>
+      
+      <a href="#" class="nav-item active" data-view="beranda">
+        <i class="fas fa-home"></i> Beranda
+      </a>
+      <a href="#" class="nav-item" data-view="eksplorasi">
+        <i class="fas fa-cubes"></i> Eksplorasi 3D
+      </a>
+      <a href="#" class="nav-item" data-view="variasi">
+        <i class="fas fa-th-large"></i> Variasi Jaring-Jaring
+      </a>
+      <a href="#" class="nav-item" data-view="eksperimen">
+        <i class="fas fa-tools"></i> Coba Susun Sendiri
+      </a>
+      <a href="#" class="nav-item" data-view="kuis">
+        <i class="fas fa-question-circle"></i> Kuis Interaktif
+        <span class="badge">4 Level</span>
+      </a>
+
+      <div class="nav-section-title" style="margin-top: 1rem;">Informasi & Progres</div>
+
+      <a href="#" class="nav-item" data-view="guru">
+        <i class="fas fa-chart-bar"></i> Mode Guru / Ringkasan
+      </a>
+      <a href="#" class="nav-item" data-view="petunjuk">
+        <i class="fas fa-book-open"></i> Petunjuk Belajar
+      </a>
+    </nav>
+
+    <!-- Content Display Area -->
+    <main class="app-content">
+
+      <!-- =================================================================== -->
+      <!-- VIEW 1: BERANDA DASHBOARD -->
+      <!-- =================================================================== -->
+      <section id="view_beranda" class="view-section active">
+        <div class="page-header">
+          <h2><i class="fas fa-graduation-cap"></i> Selamat Datang di Laboratorium Geometri Digital</h2>
+          <p>Pilih salah satu menu di bawah ini untuk memulai petualangan memahami bangun ruang dan jaring-jaringnya!</p>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Card 1 -->
+          <div class="menu-card" onclick="window.appManager.showView('eksplorasi')">
+            <div class="card-icon-wrapper icon-blue">
+              <i class="fas fa-cube"></i>
+            </div>
+            <h3>1. Eksplorasi Bangun Ruang</h3>
+            <p>Lihat bentuk 3D interaktif dari Kubus, Balok, Prisma, Limas, Tabung, Kerucut, dan Bola dari berbagai sudut.</p>
+            <div class="card-footer">
+              <span>Mulai Eksplorasi</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="menu-card" onclick="window.appManager.showView('eksplorasi')">
+            <div class="card-icon-wrapper icon-green">
+              <i class="fas fa-box-open"></i>
+            </div>
+            <h3>2. Buka Menjadi Jaring-Jaring</h3>
+            <p>Saksikan animasi halus bagaimana bangun ruang 3D perlahan merekah menjadi jaring-jaring 2D di bidang datar.</p>
+            <div class="card-footer">
+              <span>Lihat Animasi</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="menu-card" onclick="window.appManager.showView('variasi')">
+            <div class="card-icon-wrapper icon-orange">
+              <i class="fas fa-random"></i>
+            </div>
+            <h3>3. Variasi Susunan</h3>
+            <p>Temukan berbagai macam bentuk susunan jaring-jaring yang valid yang dapat dilipat kembali menjadi bangun 3D.</p>
+            <div class="card-footer">
+              <span>Lihat Variasi</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="menu-card" onclick="window.appManager.showView('eksperimen')">
+            <div class="card-icon-wrapper icon-purple">
+              <i class="fas fa-hand-pointer"></i>
+            </div>
+            <h3>4. Mode Eksperimen (Coba Susun)</h3>
+            <p>Geser, putar, dan tempel potongan-potongan sisi geometri untuk mencoba merangkai jaring-jaring kamu sendiri!</p>
+            <div class="card-footer">
+              <span>Coba Rangkai</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="menu-card" onclick="window.appManager.showView('kuis')">
+            <div class="card-icon-wrapper icon-red">
+              <i class="fas fa-award"></i>
+            </div>
+            <h3>5. Kuis Jaring-Jaring</h3>
+            <p>Uji pemahamanmu dengan kuis identifikasi sisi, menentukan sisi tegak, dan melengkapi jaring-jaring rumpang.</p>
+            <div class="card-footer">
+              <span>Kerjakan Kuis</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="menu-card" onclick="window.appManager.showView('petunjuk')">
+            <div class="card-icon-wrapper icon-teal">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3>6. Petunjuk & Teori</h3>
+            <p>Pelajari konsep matematika jaring-jaring, sifat-sifat bangun ruang, serta keunikan geometri bola.</p>
+            <div class="card-footer">
+              <span>Baca Teori</span>
+              <i class="fas fa-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 2: EKSPLORASI BANGUN RUANG 3D & ANIMAIS UN-FOLDING -->
+      <!-- =================================================================== -->
+      <section id="view_eksplorasi" class="view-section">
+        <div class="page-header">
+          <h2><i class="fas fa-cubes"></i> Eksplorasi & Animasi Jaring-Jaring</h2>
+          <p>Putar bangun 3D, buka menjadi jaring-jaring 2D, dan amati perubahan bentuk permukaannya.</p>
+        </div>
+
+        <div class="shape-workspace">
+          <!-- Left: 3D Viewport Card -->
+          <div class="viewport-card">
+            <div class="viewport-header">
+              <div class="viewport-title">
+                <i class="fas fa-vr-cardboard"></i> Viewport 3D Interaktif
+              </div>
+              <div class="camera-preset-btns">
+                <button class="btn-xs" onclick="window.threeManager.setCameraPreset('front')">Depan</button>
+                <button class="btn-xs" onclick="window.threeManager.setCameraPreset('top')">Atas</button>
+                <button class="btn-xs" onclick="window.threeManager.setCameraPreset('side')">Samping</button>
+                <button class="btn-xs" onclick="window.threeManager.resetCamera()"><i class="fas fa-sync-alt"></i> Reset View</button>
+              </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="canvas-container" id="threeCanvasContainer">
+              <div class="viewport-overlay-info">
+                <i class="fas fa-mouse"></i> Drag mouse untuk memutar | Scroll untuk Zoom
+              </div>
+              <div class="face-hover-tooltip" id="3dFaceHoverTooltip"></div>
+            </div>
+
+            <!-- Unfolding Control Bar -->
+            <div class="unfold-controls-bar">
+              <div class="control-buttons-row">
+                <div class="btn-group">
+                  <button class="btn btn-primary" id="btnPlayPause">
+                    <i class="fas fa-play"></i> ▶ Buka
+                  </button>
+                  <button class="btn btn-secondary" id="btnFoldOnly">
+                    <i class="fas fa-compress-arrows-alt"></i> Lipat
+                  </button>
+                  <button class="btn btn-secondary" id="btnResetUnfold">
+                    <i class="fas fa-redo"></i> Ulangi
+                  </button>
+                </div>
+
+                <!-- Speed Selection -->
+                <div class="speed-pills">
+                  <button class="speed-pill" data-speed="0.5">Lambat</button>
+                  <button class="speed-pill active" data-speed="1.0">Normal</button>
+                  <button class="speed-pill" data-speed="2.0">Cepat</button>
+                </div>
+              </div>
+
+              <!-- Scrubbing Slider -->
+              <div class="scrub-container">
+                <label><i class="fas fa-sliders-h"></i> Tahap Pelipatan:</label>
+                <input type="range" min="0" max="100" value="100" class="custom-slider" id="unfoldScrubber">
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Shape Information & Controls -->
+          <div class="shape-info-card">
+            <div class="shape-selector-box">
+              <label><i class="fas fa-shapes"></i> Pilih Bangun Ruang:</label>
+              <select class="custom-select" id="globalShapeSelect">
+                <optgroup label="A. Kubus & Balok">
+                  <option value="kubus" selected>Kubus (6 Sisi Persegi)</option>
+                  <option value="balok">Balok (6 Sisi Persegi Panjang)</option>
+                </optgroup>
+                <optgroup label="B. Prisma">
+                  <option value="prisma_segitiga">Prisma Segitiga</option>
+                  <option value="prisma_segiempat">Prisma Segiempat</option>
+                  <option value="prisma_segilima">Prisma Segilima</option>
+                  <option value="prisma_segienam">Prisma Segienam</option>
+                </optgroup>
+                <optgroup label="C. Limas">
+                  <option value="limas_segitiga">Limas Segitiga</option>
+                  <option value="limas_segiempat">Limas Segiempat</option>
+                  <option value="limas_segilima">Limas Segilima</option>
+                  <option value="limas_segienam">Limas Segienam</option>
+                </optgroup>
+                <optgroup label="D. Bangun Lengkung">
+                  <option value="tabung">Tabung (Silinder)</option>
+                  <option value="kerucut">Kerucut</option>
+                  <option value="bola">Bola (Geometri Khusus)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="info-header">
+              <h3 id="infoCardTitle">Kubus</h3>
+              <span class="shape-type-tag" id="infoCardCategory">Prisma | 6 Persegi Kongruen</span>
+            </div>
+
+            <!-- Geometric Badges Grid -->
+            <div class="prop-grid">
+              <div class="prop-box">
+                <div class="prop-value" id="propFacesVal">6</div>
+                <div class="prop-label">Jumlah Sisi</div>
+              </div>
+              <div class="prop-box">
+                <div class="prop-value" id="propEdgesVal">12</div>
+                <div class="prop-label">Jumlah Rusuk</div>
+              </div>
+              <div class="prop-box">
+                <div class="prop-value" id="propVertVal">8</div>
+                <div class="prop-label">Titik Sudut</div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.85rem; color: #475569; line-height: 1.4;" id="infoCardDesc">
+              Kubus adalah bangun ruang 3D yang dibatasi oleh 6 sisi berbentuk persegi yang kongruen.
+            </p>
+
+            <!-- Face Legend Items -->
+            <div class="face-list-box">
+              <h4>Identifikasi Sisi (Arahkan Kursor):</h4>
+              <div id="infoCardFaceList"></div>
+            </div>
+
+            <!-- Surface Area Formula Box -->
+            <div id="infoCardFormulaBox" style="margin-top: 1rem; padding: 0.85rem; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px;">
+              <h4 style="font-size: 0.85rem; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                <i class="fas fa-square-root-alt" style="color: #4f46e5;"></i> Asal-Usul Rumus Luas Permukaan
+              </h4>
+              <div id="infoCardFormulaMain" style="font-family: 'Courier New', monospace; font-size: 1rem; font-weight: 800; color: #4338ca; margin: 4px 0;">
+                L = 6 × s²
+              </div>
+              <p id="infoCardFormulaDesc" style="font-size: 0.78rem; color: #64748b; line-height: 1.4; margin: 0;">
+                Dihitung dari jumlah luas 6 buah persegi kongruen pada jaring-jaring.
+              </p>
+            </div>
+
+            <!-- Print Paper Craft Button -->
+            <button class="btn btn-secondary" style="width: 100%; margin-top: 0.75rem; border-color: #cbd5e1; font-weight: 700;"
+              onclick="window.appManager.printNetPattern()">
+              <i class="fas fa-print" style="color: #0284c7;"></i> Cetak Pola Jaring-Jaring (Paper Craft)
+            </button>
+
+            <!-- Sphere Warning Box -->
+            <div id="sphereMathWarningBox" style="display: none;"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 3: VARIASI JARING-JARING (GALERI DIAGRAM 2D STATIS) -->
+      <!-- =================================================================== -->
+      <section id="view_variasi" class="view-section">
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2><i class="fas fa-th-large"></i> Galeri Variasi Jaring-Jaring 2D</h2>
+            <p>Pelajari berbagai macam bentuk susunan 2D jaring-jaring datar untuk setiap bangun ruang. Setiap pola datar dapat melipat sempurna membentuk bangun 3D yang kongruen.</p>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <label style="font-size: 0.85rem; font-weight: 700; color: #475569;"><i class="fas fa-shapes"></i> Pilih Bangun Ruang:</label>
+            <select class="custom-select" id="variasiShapeSelect" style="width: auto; padding: 0.45rem 0.8rem;">
+              <option value="kubus" selected>Kubus (5 Pola Utamanya)</option>
+              <option value="balok">Balok (3 Variasi Pola)</option>
+              <option value="prisma_segitiga">Prisma Segitiga</option>
+              <option value="prisma_segiempat">Prisma Segiempat</option>
+              <option value="prisma_segilima">Prisma Segilima</option>
+              <option value="prisma_segienam">Prisma Segienam</option>
+              <option value="limas_segitiga">Limas Segitiga</option>
+              <option value="limas_segiempat">Limas Segiempat</option>
+              <option value="limas_segilima">Limas Segilima</option>
+              <option value="limas_segienam">Limas Segienam</option>
+              <option value="tabung">Tabung (Silinder)</option>
+              <option value="kerucut">Kerucut</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 2D Gallery Cards Container -->
+        <div id="variasiGalleryContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Educational Summary Banner -->
+        <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #93c5fd; padding: 1.25rem 1.5rem; border-radius: 12px; display: flex; align-items: center; gap: 1.25rem; box-shadow: var(--shadow-sm);">
+          <div style="width: 50px; height: 50px; background: #2563eb; color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div>
+            <h4 style="color: #1e3a8a; font-size: 1rem; font-weight: 800; margin-bottom: 0.25rem;">
+              Kesimpulan Matematika: Satu Bangun Ruang Memiliki Banyak Variasi Jaring-Jaring!
+            </h4>
+            <p style="color: #1e40af; font-size: 0.88rem; line-height: 1.5; margin: 0;">
+              Meskipun pola susunan 2D datar terlihat berbeda-beda pada galeri di atas, jika dilipat mengikuti garis rusuknya, seluruh variasi pola tersebut terbukti membentuk bangun 3D yang <strong>100% kongruen (persis sama)</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 4: MODE EKSPERIMEN (COBA SUSUN SENDIRI) -->
+      <!-- =================================================================== -->
+      <section id="view_eksperimen" class="view-section">
+        <div class="page-header">
+          <h2><i class="fas fa-tools"></i> Mode Eksperimen — Coba Susun Sendiri</h2>
+          <p>Geser dan rotasi potongan sisi di bawah ini untuk membentuk jaring-jaring yang valid. Lalu klik <strong>Periksa</strong>!</p>
+        </div>
+
+        <div class="experiment-grid">
+          <!-- Left: Palette & Actions -->
+          <div class="palette-card">
+            <h3><i class="fas fa-shapes"></i> Pilihan Bentuk Sisi</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 0.75rem;">
+              Klik bentuk di bawah ini untuk menambahkan potongan ke kanvas perakitan:
+            </p>
+            
+            <div class="pieces-palette" id="expPiecesPalette"></div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+              <button class="btn btn-primary" style="background: #4f46e5; border-color: #4338ca;" onclick="window.experimentMode.startChallenge()">
+                <i class="fas fa-dice"></i> 🎲 Misi Tantangan Acak
+              </button>
+              <button class="btn btn-secondary" onclick="window.experimentMode.resetCanvas()">
+                <i class="fas fa-sync-alt"></i> Bersihkan Kanvas
+              </button>
+              <button class="btn btn-secondary" onclick="window.experimentMode.rotateSelectedPiece()">
+                <i class="fas fa-undo"></i> Putar Sisi Terpilih (90°)
+              </button>
+              <button class="btn btn-secondary" style="color: #ef4444;" onclick="window.experimentMode.deleteSelectedPiece()">
+                <i class="fas fa-trash-alt"></i> Hapus Sisi Terpilih
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Canvas Viewport & Validation Result -->
+          <div class="exp-canvas-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h4><i class="fas fa-drafting-compass"></i> Kanvas Rangkaian Jaring-Jaring 2D</h4>
+              <button class="btn btn-success" onclick="window.experimentMode.checkValidation()">
+                <i class="fas fa-check"></i> Periksa Hasil Susunan
+              </button>
+            </div>
+
+            <div class="exp-canvas-viewport">
+              <canvas id="expCanvas"></canvas>
+            </div>
+
+            <!-- Result Box -->
+            <div id="expResultBox"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 5: KUIS INTERAKTIF (QUIZZES 1, 2, 3) -->
+      <!-- =================================================================== -->
+      <section id="view_kuis" class="view-section">
+        <div class="page-header">
+          <h2><i class="fas fa-award"></i> Kuis Interactive Jaring-Jaring Bangun Ruang</h2>
+          <p>Uji kemampuanmu mengenali sisi alas, sisi tutup, sisi tegak, serta melengkapi jaring-jaring!</p>
+        </div>
+
+        <!-- Quiz Category Selector Buttons -->
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+          <button class="btn btn-primary quiz-cat-btn" id="btnQuizCat1" onclick="window.quizEngine.startQuiz(1, 1)">
+            <i class="fas fa-cube"></i> Kuis 1: Pasangan Sisi (Alas & Tutup)
+          </button>
+          <button class="btn btn-secondary quiz-cat-btn" id="btnQuizCat2" onclick="window.quizEngine.startQuiz(2, 2)">
+            <i class="fas fa-check-double"></i> Kuis 2: Menentukan Sisi Tegak (Multi-select)
+          </button>
+          <button class="btn btn-secondary quiz-cat-btn" id="btnQuizCat3" onclick="window.quizEngine.startQuiz(3, 3)">
+            <i class="fas fa-puzzle-piece"></i> Kuis 3: Melengkapi Jaring-Jaring (Prisma & Limas)
+          </button>
+        </div>
+
+        <div class="quiz-container" id="quizCardContainer"></div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 6: MODE GURU / RINGKASAN PEMBELAJARAN -->
+      <!-- =================================================================== -->
+      <section id="view_guru" class="view-section">
+        <div class="page-header">
+          <h2><i class="fas fa-chart-bar"></i> Mode Guru & Ringkasan Progres Belajar</h2>
+          <p>Pantau pencapaian, jumlah soal yang diselesaikan, skor terbaik, dan daftar materi yang telah dikuasai.</p>
+        </div>
+
+        <div id="teacherReportBox"></div>
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- VIEW 7: PETUNJUK & TEORI PEMBELAJARAN -->
+      <!-- =================================================================== -->
+      <section id="view_petunjuk" class="view-section">
+        <div class="page-header">
+          <h2><i class="fas fa-book-open"></i> Petunjuk & Teori Pembelajaran</h2>
+          <p>Panduan ringkas teori jaring-jaring bangun ruang untuk siswa SMP/MTs.</p>
+        </div>
+
+        <div id="theoryContentBox"></div>
+      </section>
+
+    </main>
+  <!-- Printable Paper Craft Area (Dedicated for print output) -->
+  <div id="printablePaperCraftArea"></div>
+
+  <!-- Modal Pratinjau Cetak Pola Kertas -->
+  <div class="modal-backdrop" id="printPreviewModal" style="display: none;">
+    <div class="modal-dialog" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3><i class="fas fa-print" style="color: #0284c7;"></i> Pratinjau Cetak Pola Kertas (Paper Craft)</h3>
+        <button class="modal-close-btn" onclick="document.getElementById('printPreviewModal').style.display = 'none';">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center;">
+        <p style="font-size: 0.85rem; color: #475569; margin-bottom: 0.75rem;">
+          Pola jaring-jaring ini telah dilengkapi <strong>lidah pengeleman (glue tabs)</strong> dan garis lipatan putus-putus. Siap dicetak pada kertas HVS / Karton A4 untuk dirakit secara fisik!
+        </p>
+        <div id="printModalPreviewBox" style="background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px; max-height: 380px; overflow-y: auto;"></div>
+      </div>
+      <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+        <button class="btn btn-secondary" onclick="document.getElementById('printPreviewModal').style.display = 'none';">Tutup</button>
+        <button class="btn btn-primary" onclick="window.print()">
+          <i class="fas fa-print"></i> Cetak / Simpan PDF Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Application Script -->
+  <script src="js/shapesData.js?v=2.1"></script>
+  <script src="js/audioEffects.js?v=2.1"></script>
+  <script src="js/netFoldEngine.js?v=2.1"></script>
+  <script src="js/threeManager.js?v=2.1"></script>
+  <script src="js/experimentMode.js?v=2.1"></script>
+  <script src="js/quizEngine.js?v=2.2"></script>
+  <script src="js/theoryGuide.js?v=2.1"></script>
+  <script src="js/app.js?v=2.1"></script>
+</body>
+</html>
