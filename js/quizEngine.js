@@ -45,6 +45,10 @@ class QuizEngine {
     this.loadQuestion();
   }
 
+  resetCurrentQuiz() {
+    this.startQuiz(this.currentQuizType, this.currentLevel);
+  }
+
   loadQuestion() {
     this.selectedOptions.clear();
     this.currentQuestion = this.questionPool[this.questionIndex % this.questionPool.length];
@@ -647,9 +651,14 @@ class QuizEngine {
 
     container.innerHTML = `
       <div class="quiz-card">
-        <div class="quiz-meta-bar">
+        <div class="quiz-meta-bar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
           <span class="level-badge"><i class="fas fa-tasks"></i> ${catTitle}</span>
-          <span class="score-badge"><i class="fas fa-star"></i> Soal ${this.questionIndex + 1}/${this.totalQuestions} | Skor: ${this.score}</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="score-badge"><i class="fas fa-star"></i> Soal ${this.questionIndex + 1}/${this.totalQuestions} | Skor: ${this.score}</span>
+            <button class="btn-xs" style="background: #ffffff; border: 1.5px solid #cbd5e1; color: #ef4444; font-weight: 700; border-radius: 20px; padding: 4px 10px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" onclick="window.quizEngine.resetCurrentQuiz()" title="Ulangi kuis ini dari soal nomor 1">
+              <i class="fas fa-undo"></i> Reset Kuis
+            </button>
+          </div>
         </div>
 
         <div class="question-title">${q.title}</div>

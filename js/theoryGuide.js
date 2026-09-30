@@ -132,6 +132,12 @@ class TheoryGuide {
             </tr>
           </tbody>
         </table>
+
+        <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+          <button class="btn btn-secondary" style="color: #ef4444; border-color: #fca5a5; font-size: 0.85rem;" onclick="window.appManager.resetProgress()">
+            <i class="fas fa-trash-alt"></i> Reset Seluruh Data & Progres Kuis ke 0%
+          </button>
+        </div>
       </div>
     `;
   }

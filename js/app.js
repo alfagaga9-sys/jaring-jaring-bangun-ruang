@@ -89,6 +89,25 @@ class AppManager {
     this.addProgressPoints(20);
   }
 
+  resetProgress() {
+    if (confirm("Apakah Anda yakin ingin mereset seluruh riwayat kuis dan progres belajar ke 0%?")) {
+      this.state = {
+        exploredShapes: [],
+        viewedNets: [],
+        quizzesAttempted: 0,
+        totalCorrectAnswers: 0,
+        topScore: 0,
+        overallProgress: 0
+      };
+      this.saveState();
+      this.updateProgressUI();
+      if (window.theoryGuide) {
+        window.theoryGuide.renderTeacherReport(this.state);
+      }
+      alert("Seluruh data kuis dan progres belajar berhasil direset ke 0%!");
+    }
+  }
+
   updateProgressUI() {
     const fill = document.getElementById("headerProgressBarFill");
     const text = document.getElementById("headerProgressText");
